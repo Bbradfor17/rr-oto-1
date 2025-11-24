@@ -76,7 +76,7 @@ const OTO1 = () => {
 
     return (
         <Container maxWidth="md" sx={{ pt: 4, pb: 8 }}>
-            <Box sx={{ textAlign: 'center', mb: 6 }}>
+            <Box sx={{ textAlign: 'center', mb: 4.8 }}>
                 <Typography variant="h3" component="h1" gutterBottom>
                     Wait! Your Order is Not Complete...
                 </Typography>
