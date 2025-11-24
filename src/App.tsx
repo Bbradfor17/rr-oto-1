@@ -1,10 +1,10 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { theme } from './theme';
-import LandingPage from './pages/LandingPage';
-import OTO1 from './pages/OTO1';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { theme } from "./theme";
+import LandingPage from "./pages/LandingPage";
+import OTO1 from "./pages/OTO1";
 
-function App() {
+export const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -16,6 +16,4 @@ function App() {
       </Router>
     </ThemeProvider>
   );
-}
-
-export default App;
+};

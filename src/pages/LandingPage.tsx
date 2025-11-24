@@ -1,7 +1,7 @@
-import Hero from '../components/Hero';
-import WhatsInside from '../components/WhatsInside';
-import LeadForm from '../components/LeadForm';
-import Footer from '../components/Footer';
+import Hero from "../components/Hero";
+import WhatsInside from "../components/WhatsInside";
+import LeadForm from "../components/LeadForm";
+import Footer from "../components/Footer";
 
 const LandingPage = () => {
   return (
