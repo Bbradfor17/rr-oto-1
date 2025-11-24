@@ -80,7 +80,7 @@ const OTO1 = () => {
                     Wait! Your Order is Not Complete...
                 </Typography>
                 <Typography variant="h5" color="text.secondary" paragraph>
-                    One Time Offer: Upgrade your research capabilities today.
+                    Upgrade your research capabilities today.
                 </Typography>
                 <Typography variant="subtitle1" color="error" fontWeight="bold">
                     ⚠️ One time exclusive offer not available on our main website
