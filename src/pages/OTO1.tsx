@@ -39,7 +39,8 @@ const OTO1 = () => {
             }}
         >
             <Box sx={{
-                height: '200px',
+                width: '100%',
+                aspectRatio: '1 / 1',
                 bgcolor: '#e0e0e0',
                 mb: 2,
                 borderRadius: 1,
