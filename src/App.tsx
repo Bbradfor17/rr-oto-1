@@ -1,18 +1,19 @@
 import { ThemeProvider, CssBaseline } from '@mui/material';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { theme } from './theme';
-import Hero from './components/Hero';
-import WhatsInside from './components/WhatsInside';
-import LeadForm from './components/LeadForm';
-import Footer from './components/Footer';
+import LandingPage from './pages/LandingPage';
+import OTO1 from './pages/OTO1';
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Hero />
-      <WhatsInside />
-      <LeadForm />
-      <Footer />
+      <Router>
+        <Routes>
+          <Route path="/" element={<LandingPage />} />
+          <Route path="/oto-1" element={<OTO1 />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   );
 }
