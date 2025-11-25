@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Container, Typography, Box, Button, Grid, Radio, Paper } from '@mui/material';
 import CheckoutForm from '../components/CheckoutForm';
+import tirzepatideImage from '../assets/tirzepatide-image.jpeg';
+import semaglutideImage from '../assets/semaglutide-image.jpeg';
 
-const OTO1 = () => {
+export const OTO1 = () => {
     const [selectedBundle, setSelectedBundle] = useState<'bundle1' | 'bundle2'>('bundle1');
 
     const handleSelect = (bundle: 'bundle1' | 'bundle2') => {
@@ -13,12 +15,14 @@ const OTO1 = () => {
         value,
         title,
         subtitle,
-        imageLabel
+        imageLabel,
+        imageSrc,
     }: {
         value: 'bundle1' | 'bundle2',
         title: string,
         subtitle: string,
         imageLabel: string
+        imageSrc: string
     }) => (
         <Box
             onClick={() => handleSelect(value)}
@@ -48,7 +52,7 @@ const OTO1 = () => {
                 alignItems: 'center',
                 justifyContent: 'center'
             }}>
-                <Typography>{imageLabel}</Typography>
+                <img src={imageSrc} alt={imageLabel} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
             </Box>
             <Typography variant="h6" gutterBottom>{title}</Typography>
             <Typography variant="body2" color="text.secondary" paragraph>
@@ -111,6 +115,7 @@ const OTO1 = () => {
                                 title="Tirzepatide 10mg Bundle"
                                 subtitle="Buy 2 Get 3 Free Vials (5 Total) - Free Shipping & Handling"
                                 imageLabel="Tirzepatide Image"
+                                imageSrc={tirzepatideImage}
                             />
                         </Grid>
 
@@ -121,6 +126,7 @@ const OTO1 = () => {
                                 title="Semaglutide 10mg Bundle"
                                 subtitle="Buy 2 Get 3 Free Vials (5 Total) - Free Shipping & Handling"
                                 imageLabel="Semaglutide Image"
+                                imageSrc={semaglutideImage}
                             />
                         </Grid>
                     </Grid>
@@ -137,5 +143,3 @@ const OTO1 = () => {
         </Container>
     );
 };
-
-export default OTO1;
