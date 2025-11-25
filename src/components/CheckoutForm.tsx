@@ -1,15 +1,147 @@
-import { useState } from 'react';
-import { Box, Typography, TextField, Grid, Button, Checkbox, FormControlLabel, Paper, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, Typography, TextField, Grid, Button, Checkbox, FormControlLabel, Paper, Divider, Alert } from '@mui/material';
+import { createCheckoutOrder } from '../services';
+
+const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_API_KEY;
+
+declare global {
+    interface Window {
+        grecaptcha?: {
+            ready(callback: () => void): void;
+            execute(siteKey: string, options: { action: string }): Promise<string>;
+        };
+    }
+}
 
 interface CheckoutFormProps {
     selectedBundle: 'bundle1' | 'bundle2';
 }
 
 const CheckoutForm = ({ selectedBundle }: CheckoutFormProps) => {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        street: '',
+        city: '',
+        state: '',
+        zip: '',
+    });
     const [legalChecked, setLegalChecked] = useState(false);
+    const [status, setStatus] = useState<{ type: 'success' | 'error' | ''; message: string }>({
+        type: '',
+        message: '',
+    });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        if (!RECAPTCHA_SITE_KEY) return;
+        if (document.getElementById('recaptcha-script')) return;
+        const script = document.createElement('script');
+        script.src = `https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`;
+        script.async = true;
+        script.defer = true;
+        script.id = 'recaptcha-script';
+        document.head.appendChild(script);
+    }, []);
+
+    const executeRecaptcha = () =>
+        new Promise<string | undefined>((resolve) => {
+            if (!RECAPTCHA_SITE_KEY) {
+                resolve(undefined);
+                return;
+            }
+
+            const attempt = (retries = 10) => {
+                if (window.grecaptcha && window.grecaptcha.ready) {
+                    window.grecaptcha.ready(() => {
+                        window.grecaptcha
+                            ?.execute(RECAPTCHA_SITE_KEY, { action: 'checkout' })
+                            .then((token) => resolve(token))
+                            .catch(() => resolve(undefined));
+                    });
+                } else if (retries > 0) {
+                    setTimeout(() => attempt(retries - 1), 200);
+                } else {
+                    resolve(undefined);
+                }
+            };
+
+            attempt();
+        });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setStatus({ type: '', message: '' });
+
+        if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.street || !formData.city || !formData.state || !formData.zip) {
+            setStatus({ type: 'error', message: 'Please fill in all required contact and shipping fields.' });
+            return;
+        }
+
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(formData.email)) {
+            setStatus({ type: 'error', message: 'Please enter a valid email address.' });
+            return;
+        }
+
+        if (!legalChecked) {
+            setStatus({ type: 'error', message: 'You must acknowledge the legal disclaimer to continue.' });
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const recaptchaToken = await executeRecaptcha();
+
+            const response = await createCheckoutOrder({
+                bundle: selectedBundle,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                email: formData.email,
+                phone: formData.phone,
+                address: {
+                    street: formData.street,
+                    city: formData.city,
+                    state: formData.state,
+                    zip: formData.zip,
+                },
+                recaptchaToken,
+            });
+
+            if (response.checkoutUrl) {
+                window.location.href = response.checkoutUrl;
+            } else {
+                setStatus({
+                    type: 'success',
+                    message: 'Your checkout session has been created. Please complete your payment on the next page.',
+                });
+            }
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : 'There was an error starting checkout. Please try again.';
+            setStatus({ type: 'error', message });
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
-        <Paper elevation={3} sx={{ p: 4, mt: 6, bgcolor: 'background.paper', textAlign: 'left' }}>
+        <Paper
+            elevation={3}
+            component="form"
+            onSubmit={handleSubmit}
+            sx={{ p: 4, mt: 6, bgcolor: 'background.paper', textAlign: 'left' }}
+        >
             <Typography variant="h5" gutterBottom sx={{ mb: 3 }}>
                 Secure Checkout
             </Typography>
@@ -20,13 +152,46 @@ const CheckoutForm = ({ selectedBundle }: CheckoutFormProps) => {
                     <Typography variant="h6" gutterBottom>Contact Information</Typography>
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
-                    <TextField fullWidth label="Full Name" required />
+                    <TextField
+                        fullWidth
+                        label="First Name"
+                        name="firstName"
+                        required
+                        value={formData.firstName}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
-                    <TextField fullWidth label="Email Address" type="email" required />
+                    <TextField
+                        fullWidth
+                        label="Last Name"
+                        name="lastName"
+                        required
+                        value={formData.lastName}
+                        onChange={handleChange}
+                    />
                 </Grid>
-                <Grid size={{ xs: 12 }}>
-                    <TextField fullWidth label="Phone Number" type="tel" required />
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <TextField
+                        fullWidth
+                        label="Email Address"
+                        type="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleChange}
+                    />
+                </Grid>
+                <Grid size={{ xs: 12, md: 6 }}>
+                    <TextField
+                        fullWidth
+                        label="Phone Number"
+                        type="tel"
+                        name="phone"
+                        required
+                        value={formData.phone}
+                        onChange={handleChange}
+                    />
                 </Grid>
 
                 {/* Shipping Address */}
@@ -34,16 +199,44 @@ const CheckoutForm = ({ selectedBundle }: CheckoutFormProps) => {
                     <Typography variant="h6" gutterBottom>Shipping Address</Typography>
                 </Grid>
                 <Grid size={{ xs: 12 }}>
-                    <TextField fullWidth label="Street Address" required />
+                    <TextField
+                        fullWidth
+                        label="Street Address"
+                        name="street"
+                        required
+                        value={formData.street}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid size={{ xs: 12, md: 6 }}>
-                    <TextField fullWidth label="City" required />
+                    <TextField
+                        fullWidth
+                        label="City"
+                        name="city"
+                        required
+                        value={formData.city}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <TextField fullWidth label="State" required />
+                    <TextField
+                        fullWidth
+                        label="State"
+                        name="state"
+                        required
+                        value={formData.state}
+                        onChange={handleChange}
+                    />
                 </Grid>
                 <Grid size={{ xs: 12, md: 3 }}>
-                    <TextField fullWidth label="Zip Code" required />
+                    <TextField
+                        fullWidth
+                        label="Zip Code"
+                        name="zip"
+                        required
+                        value={formData.zip}
+                        onChange={handleChange}
+                    />
                 </Grid>
 
                 {/* Payment Info */}
@@ -113,15 +306,23 @@ const CheckoutForm = ({ selectedBundle }: CheckoutFormProps) => {
 
                 {/* Submit Button */}
                 <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
+                    {status.message && (
+                        <Box sx={{ mb: 2 }}>
+                            <Alert severity={status.type === 'success' ? 'success' : 'error'}>
+                                {status.message}
+                            </Alert>
+                        </Box>
+                    )}
                     <Button
                         fullWidth
                         variant="contained"
                         color="primary"
                         size="large"
-                        disabled={!legalChecked}
+                        type="submit"
+                        disabled={!legalChecked || isSubmitting}
                         sx={{ py: 2, fontSize: '1.1rem' }}
                     >
-                        Complete Order - $197.00
+                        {isSubmitting ? 'Starting Secure Checkout...' : 'Complete Order - $197.00'}
                     </Button>
                     <Box sx={{ textAlign: 'center', mt: 1 }}>
                         <Typography variant="caption" color="text.secondary">
