@@ -10,9 +10,7 @@ export default defineConfig(({ mode }) => {
   const recaptchaKey = env.RECAPTCHA_API_KEY;
 
   return {
-    // IMPORTANT: this must match the subdirectory where WordPress serves main.js
-    // e.g. https://yourdomain.com/react-oto-1/main.js
-    base: "/react-oto-1/",
+    base: "/revolve-ebook-offer",
     plugins: [react()],
     define: {
       "process.env.API_ROOT": apiRoot ? JSON.stringify(apiRoot) : "undefined",
