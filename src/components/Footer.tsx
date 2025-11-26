@@ -1,6 +1,6 @@
 import { Box, Container, Typography, Link, Stack } from "@mui/material";
 
-export default function Footer() {
+export const Footer = () => {
   return (
     <Box
       component="footer"
@@ -69,4 +69,4 @@ export default function Footer() {
       </Container>
     </Box>
   );
-}
+};

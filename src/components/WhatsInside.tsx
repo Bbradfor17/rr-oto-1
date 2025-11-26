@@ -55,7 +55,7 @@ const tocStructure = [
   },
 ];
 
-export default function WhatsInside() {
+export const WhatsInside = () => {
   return (
     <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: "#FAFAFA" }}>
       <Container maxWidth="md">
@@ -142,4 +142,4 @@ export default function WhatsInside() {
       </Container>
     </Box>
   );
-}
+};

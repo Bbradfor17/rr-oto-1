@@ -1,44 +1,7 @@
-import { useState } from "react";
-import {
-  Box,
-  Container,
-  Typography,
-  TextField,
-  Button,
-  Stack,
-} from "@mui/material";
+import { Box, Container, Typography, Stack, Button } from "@mui/material";
+import { SignupCapture } from "./SignupCapture";
 
-export default function Hero() {
-  const [formData, setFormData] = useState({
-    email: "",
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 1000));
-      console.log("Form data to send to email provider:", formData);
-
-      // Scroll to lead form
-      const leadForm = document.getElementById("lead-form");
-      leadForm?.scrollIntoView({ behavior: "smooth" });
-    } catch (error) {
-      console.error("Form submission error:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
+export const Hero = () => {
   return (
     <Box
       sx={{
@@ -52,7 +15,6 @@ export default function Hero() {
       }}
     >
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-        {/* Main Headline */}
         <Typography
           variant="h1"
           sx={{
@@ -69,7 +31,6 @@ export default function Hero() {
           COAs Don't Tell the Full Story. This Guide Does.
         </Typography>
 
-        {/* Subheadline */}
         <Typography
           variant="h5"
           color="text.secondary"
@@ -87,7 +48,6 @@ export default function Hero() {
           show
         </Typography>
 
-        {/* Ebook Cover Image */}
         <Box
           sx={{
             maxWidth: "450px",
@@ -115,7 +75,6 @@ export default function Hero() {
           />
         </Box>
 
-        {/* Value Proposition Bullets */}
         <Box sx={{ mb: 4, maxWidth: "650px", mx: "auto" }}>
           <Typography
             variant="h6"
@@ -195,7 +154,6 @@ export default function Hero() {
           </Typography>
         </Box>
 
-        {/* Limited Research Access Bonus Section */}
         <Box
           sx={{
             maxWidth: "650px",
@@ -287,7 +245,10 @@ export default function Hero() {
             understanding peptide quality.
           </Typography>
 
-          <Box
+          <Button
+            onClick={() => {
+              window.location.href = "#signup";
+            }}
             sx={{
               display: "inline-block",
               px: 4,
@@ -300,88 +261,40 @@ export default function Hero() {
             }}
           >
             Get the Guide + Bonus
-          </Box>
+          </Button>
         </Box>
 
         {/* Email Form */}
-        <Box
+        <SignupCapture
+          id="signup"
+          variant="dark"
+          successMessage="Thank you for your interest. Redirecting you to your exclusive offer..."
+          buttonText="Get Instant Access"
           sx={{
-            maxWidth: "500px",
-            mx: "auto",
-            mb: 3,
             p: 4,
-            backgroundColor: "#FAFAFA",
-            borderRadius: 2,
-            border: "1px solid #E0E0E0",
+            backgroundColor: "#FFFFFF",
+            maxWidth: "34.375rem",
+            mx: "auto",
+            borderRadius: "16px !important",
+            border: "0.0625rem solid rgba(0, 0, 0, 0.06)",
+            boxShadow: "0 0.75rem 2.5rem rgba(0, 0, 0, 0.35)",
+          }}
+        />
+
+        <Typography
+          variant="caption"
+          sx={{
+            display: "block",
+            textAlign: "center",
+            color: "text.secondary",
+            fontSize: "0.875rem",
+            marginTop: "1.25rem",
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              mb: 3,
-              fontWeight: 600,
-              fontSize: "1.25rem",
-              textAlign: "center",
-            }}
-          >
-            Get Instant Access (FREE)
-          </Typography>
-
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-              mb: 2,
-            }}
-          >
-            <TextField
-              fullWidth
-              label="Email Address"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              variant="outlined"
-              size="medium"
-              sx={{ backgroundColor: "#FFFFFF" }}
-            />
-            <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              disabled={isSubmitting}
-              sx={{
-                py: 1.75,
-                fontSize: "1.0625rem",
-                fontWeight: 600,
-                backgroundColor: "#000000",
-                "&:hover": {
-                  backgroundColor: "#333333",
-                },
-              }}
-            >
-              {isSubmitting ? "Processing..." : "Get Instant Access"}
-            </Button>
-          </Box>
-
-          <Typography
-            variant="caption"
-            sx={{
-              display: "block",
-              textAlign: "center",
-              color: "text.secondary",
-              fontSize: "0.875rem",
-            }}
-          >
-            No credit card. No signup fees. Just practical quality assurance in
-            your inbox.
-          </Typography>
-        </Box>
+          No credit card. No signup fees. Just practical quality assurance in
+          your inbox.
+        </Typography>
       </Container>
     </Box>
   );
-}
+};

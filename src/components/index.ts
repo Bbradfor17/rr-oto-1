@@ -1,4 +1,7 @@
-export { default as Hero } from "./Hero";
-export { default as WhatsInside } from "./WhatsInside";
-export { default as LeadForm } from "./LeadForm";
-export { default as Footer } from "./Footer";
+export * from "./Hero";
+export * from "./WhatsInside";
+export * from "./LeadForm";
+export * from "./Footer";
+export * from "./BundleOption";
+export * from "./CheckoutForm";
+export * from "./SignupCapture";
