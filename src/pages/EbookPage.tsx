@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { Hero, WhatsInside, LeadForm } from "../components";
-import heroBg from "../assets/hero-bg.png";
+import heroBg from "../assets/revolve-ebook-offer/hero-bg.png";
 
 export const EbookPage = () => {
   return (

@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Container, Typography, Box, Button, Grid, Paper } from "@mui/material";
 import CheckoutForm from "../components/CheckoutForm";
-import tirzepatideImage from "../assets/tirzepatide-image.jpeg";
-import semaglutideImage from "../assets/semaglutide-image.jpeg";
-import heroBg from "../assets/hero-bg.png";
+import tirzepatideImage from "../assets/revolve-ebook-offer/tirzepatide-image.jpeg";
+import semaglutideImage from "../assets/revolve-ebook-offer/semaglutide-image.jpeg";
+import heroBg from "../assets/revolve-ebook-offer/hero-bg.png";
 import { BundleOption } from "../components/BundleOption";
 
 export const OTO1 = () => {
