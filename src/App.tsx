@@ -1,7 +1,7 @@
-import { ThemeProvider, CssBaseline } from '@mui/material';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { theme } from './theme';
-import { OTO1 } from './pages/OTO1.tsx';
+import { ThemeProvider, CssBaseline } from "@mui/material";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { theme } from "./theme";
+import { EbookPage, OTO1 } from "./pages";
 
 const App = () => {
   return (
@@ -9,7 +9,8 @@ const App = () => {
       <CssBaseline />
       <Router>
         <Routes>
-          <Route path="/" element={<OTO1 />} />
+          <Route path="/" element={<EbookPage />} />
+          <Route path="/oto" element={<OTO1 />} />
         </Routes>
       </Router>
     </ThemeProvider>
