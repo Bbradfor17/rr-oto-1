@@ -252,7 +252,7 @@ export const SignupCapture = ({
     },
     {
       name: "phone",
-      label: "Phone Number",
+      label: "Phone Number (optional)",
       placeholder: "Phone Number (optional)",
       autoComplete: "tel",
       type: "tel",
@@ -290,7 +290,7 @@ export const SignupCapture = ({
                   ] as string
                 }
                 onChange={handleChange}
-                required
+                required={field.required}
                 variant="outlined"
                 autoComplete={field.autoComplete}
                 type={field.type}
@@ -312,7 +312,7 @@ export const SignupCapture = ({
                 ] as string
               }
               onChange={handleChange}
-              required
+              required={field.required}
               variant="outlined"
               autoComplete={field.autoComplete}
               type={field.type}

@@ -1,4 +1,4 @@
-import { ThemeProvider, CssBaseline } from "@mui/material";
+import { ThemeProvider } from "@mui/material";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { theme } from "./theme";
 import { EbookPage, OTO1 } from "./pages";
@@ -6,7 +6,6 @@ import { EbookPage, OTO1 } from "./pages";
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       <Router>
         <Routes>
           <Route path="/" element={<EbookPage />} />

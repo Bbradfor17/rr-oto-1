@@ -343,17 +343,6 @@ const CheckoutForm = ({ selectedBundle }: CheckoutFormProps) => {
 
         {/* Legal Disclaimer */}
         <Grid size={{ xs: 12 }} sx={{ mt: 2 }}>
-          <Paper
-            variant="outlined"
-            sx={{
-              p: 2,
-              borderColor: "warning.main",
-              bgcolor: "warning.light",
-              opacity: 0.1,
-            }}
-          >
-            {/* Background opacity hack, better to use alpha color */}
-          </Paper>
           <Box
             sx={{
               p: 2,

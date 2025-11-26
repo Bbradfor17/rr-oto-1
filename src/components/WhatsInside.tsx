@@ -60,7 +60,6 @@ export const WhatsInside = () => {
     <Box
       sx={{
         py: { xs: 6, md: 8 },
-        backgroundColor: "#FAFAFA",
         borderTopLeftRadius: "16px",
         borderTopRightRadius: "16px",
       }}

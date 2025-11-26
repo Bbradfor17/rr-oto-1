@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Container, Typography, Box, Button, Grid, Paper } from "@mui/material";
 import CheckoutForm from "../components/CheckoutForm";
 import tirzepatideImage from "../assets/tirzepatide-image.jpeg";
@@ -15,10 +15,13 @@ export const OTO1 = () => {
     setSelectedBundle(bundle);
   };
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, []);
+
   return (
     <Box
       sx={{
-        minHeight: "100vh",
         display: "flex",
         alignItems: "flex-start",
         position: "relative",

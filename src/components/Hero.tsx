@@ -9,7 +9,6 @@ export const Hero = () => {
         display: "flex",
         alignItems: "center",
         position: "relative",
-        backgroundColor: "#FFFFFF",
         pt: { xs: 2, md: 3 },
         pb: { xs: 6, md: 8 },
       }}
@@ -266,7 +265,6 @@ export const Hero = () => {
 
         {/* Email Form */}
         <SignupCapture
-          id="signup"
           variant="dark"
           successMessage="Thank you for your interest. Redirecting you to your exclusive offer..."
           buttonText="Get Instant Access"
