@@ -57,7 +57,14 @@ const tocStructure = [
 
 export const WhatsInside = () => {
   return (
-    <Box sx={{ py: { xs: 6, md: 8 }, backgroundColor: "#FAFAFA" }}>
+    <Box
+      sx={{
+        py: { xs: 6, md: 8 },
+        backgroundColor: "#FAFAFA",
+        borderTopLeftRadius: "16px",
+        borderTopRightRadius: "16px",
+      }}
+    >
       <Container maxWidth="md">
         <Box sx={{ textAlign: "center", mb: 5 }}>
           <Typography

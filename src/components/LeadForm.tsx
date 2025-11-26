@@ -8,6 +8,8 @@ export const LeadForm = () => {
       sx={{
         py: { xs: 6, md: 8 },
         backgroundColor: "#000000",
+        borderBottomLeftRadius: "16px",
+        borderBottomRightRadius: "16px",
         color: "#FFFFFF",
       }}
     >

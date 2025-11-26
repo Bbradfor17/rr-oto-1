@@ -64,7 +64,7 @@ export const Hero = () => {
               width: "100%",
               maxWidth: "450px",
               height: "auto",
-              borderRadius: 1,
+              borderRadius: "12px",
               boxShadow: "0 8px 32px rgba(0, 0, 0, 0.12)",
               transition: "transform 0.3s ease",
               "&:hover": {
@@ -161,7 +161,7 @@ export const Hero = () => {
             mb: 4,
             p: 4,
             backgroundColor: "#000000",
-            borderRadius: 2,
+            borderRadius: "12px",
             border: "2px solid",
             borderColor: "#FFFFFF",
             textAlign: "center",
@@ -247,7 +247,7 @@ export const Hero = () => {
 
           <Button
             onClick={() => {
-              window.location.href = "#signup";
+              window.location.href = "#lead-form";
             }}
             sx={{
               display: "inline-block",
@@ -255,7 +255,7 @@ export const Hero = () => {
               py: 1.5,
               backgroundColor: "#FFFFFF",
               color: "#000000",
-              borderRadius: 1,
+              borderRadius: "8px",
               fontWeight: 700,
               fontSize: "0.9375rem",
             }}
