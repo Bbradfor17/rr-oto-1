@@ -1,15 +1,9 @@
 import { useState } from "react";
-import {
-  Container,
-  Typography,
-  Box,
-  Button,
-  Grid,
-  Paper,
-} from "@mui/material";
+import { Container, Typography, Box, Button, Grid, Paper } from "@mui/material";
 import CheckoutForm from "../components/CheckoutForm";
 import tirzepatideImage from "../assets/tirzepatide-image.jpeg";
 import semaglutideImage from "../assets/semaglutide-image.jpeg";
+import heroBg from "../assets/hero-bg.png";
 import { BundleOption } from "../components/BundleOption";
 
 export const OTO1 = () => {
@@ -22,8 +16,40 @@ export const OTO1 = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ pt: 4, pb: 8 }}>
-      <Box sx={{ textAlign: "center", mb: 4.8 }}>
+    <Box
+      sx={{
+        minHeight: "100vh",
+        display: "flex",
+        alignItems: "flex-start",
+        position: "relative",
+        backgroundImage: `url(${heroBg})`,
+        backgroundSize: "cover",
+        backgroundAttachment: { xs: "scroll", md: "fixed" },
+        backgroundPosition: { xs: "center top", md: "center" },
+        backgroundRepeat: "no-repeat",
+        "&::before": {
+          content: '""',
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background:
+            "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(245,245,245,0.9))",
+          zIndex: 1,
+        },
+      }}
+    >
+      <Container
+        maxWidth="md"
+        sx={{
+          pt: 4,
+          pb: 8,
+          position: "relative",
+          zIndex: 2,
+        }}
+      >
+        <Box sx={{ textAlign: "center", mb: 4.8 }}>
         <Typography variant="h3" component="h1" gutterBottom>
           Wait! Your Order is Not Complete...
         </Typography>
@@ -35,7 +61,7 @@ export const OTO1 = () => {
         </Typography>
       </Box>
 
-      <Box sx={{ mb: 6, textAlign: "center" }}>
+        <Box sx={{ mb: 6, textAlign: "center" }}>
         <Paper
           elevation={3}
           sx={{
@@ -72,6 +98,8 @@ export const OTO1 = () => {
                 subtitle="Buy 2 Get 3 Free Vials (5 Total) - Free Shipping & Handling"
                 imageLabel="Semaglutide Image"
                 imageSrc={semaglutideImage}
+                handleSelect={handleSelect}
+                selectedBundle={selectedBundle}
               />
             </Grid>
           </Grid>
@@ -82,7 +110,8 @@ export const OTO1 = () => {
             <Button color="inherit">No thanks, I don't want to upgrade</Button>
           </Box>
         </Paper>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </Box>
   );
 };
