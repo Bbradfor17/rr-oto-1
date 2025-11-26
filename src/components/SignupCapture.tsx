@@ -25,6 +25,7 @@ interface SignupCaptureProps {
 
 const SIGNUP_SUCCESS_EVENT = "landingSignupSuccess";
 const RECAPTCHA_SITE_KEY = process.env.RECAPTCHA_API_KEY;
+const USE_MOCK_DATA = process.env.USE_MOCK_DATA;
 
 declare global {
   interface Window {
@@ -114,7 +115,11 @@ export const SignupCapture = ({
     setIsSubmitting(true);
     setStatus({ type: "", message: "" });
 
-    // Validate required fields (phone is optional)
+    if (USE_MOCK_DATA) {
+      navigate("/oto");
+      return;
+    }
+
     if (!formData.firstName || !formData.lastName || !formData.email) {
       setStatus({
         type: "error",
