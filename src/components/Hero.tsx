@@ -1,5 +1,6 @@
 import { Box, Container, Typography, Stack, Button } from "@mui/material";
 import { SignupCapture } from "./SignupCapture";
+import ebookCover from "../assets/revolve-ebook-offer/ebook-cover.jpg";
 
 export const Hero = () => {
   return (
@@ -57,7 +58,7 @@ export const Hero = () => {
         >
           <Box
             component="img"
-            src="/ebook-cover.jpg"
+            src={ebookCover}
             alt="The Researcher's Guide to Peptides - Volume 1"
             sx={{
               width: "100%",
